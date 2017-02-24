@@ -10,10 +10,12 @@ val akkaVersion = "2.3.8"
 
 libraryDependencies ++= {
   Seq(
-    "org.webjars" % "jquery" % "2.1.1",
-    "com.typesafe.akka"       %%  "akka-actor"      % akkaVersion,
-    "com.typesafe.akka"       %%  "akka-slf4j"      % akkaVersion,
+    "org.webjars"             % "jquery"                          % "2.1.1",
+    "com.typesafe.akka"       %%  "akka-actor"                    % akkaVersion,
+    "com.typesafe.akka"       %%  "akka-slf4j"                    % akkaVersion,
     "com.typesafe.akka"       %%  "akka-persistence-experimental" % akkaVersion,
-    "com.github.ironfish"     %% "akka-persistence-mongo-casbah"  % "0.7.5"
+    "com.github.ironfish"     %% "akka-persistence-mongo-casbah"  % "0.7.5",
+    ws,
+    "com.jason-goodwin"       %% "authentikat-jwt"                % "0.4.1"
   )
 }
