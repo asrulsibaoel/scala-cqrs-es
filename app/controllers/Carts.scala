@@ -13,7 +13,7 @@ import domain.handler.CartCommandHandler
 
 import scala.concurrent.Future
 
-object Carts extends Controller {
+object Carts extends Controller with Secured {
   import CartCommandHandler._
   import CartCommand._
 
@@ -24,7 +24,7 @@ object Carts extends Controller {
 
   def noPrice = Future.successful(BadRequest(error("please set the 'price' field")))
 
-  def add = Action.async(parse.json) { request =>
+  def add = Authenticated.async(parse.json) { request =>
     val price = (request.body \ "price").asOpt[Double]
 
     price.fold(noPrice) { p =>
@@ -34,7 +34,7 @@ object Carts extends Controller {
     }
   }
 
-  def get(id: String) = Action.async {
+  def get(id: String) = Authenticated.async {
     sendCmd(GetCart(id)) map {
       case c: Cart => Ok(Json.toJson(c))
       case Uninitialized | Removed => NotFound(error(s"cart '$id' not found"))
@@ -42,14 +42,14 @@ object Carts extends Controller {
   }
 
 
-  def delete(id: String) = Action.async {
+  def delete(id: String) = Authenticated.async {
     sendCmd(DeleteCart(id)) map {
       case _ => NoContent
     }
   }
 
 
-  def update(id: String) = Action.async(parse.json) { request =>
+  def update(id: String) = Authenticated.async(parse.json) { request =>
     val price = (request.body \ "price").asOpt[Double]
 
     price.fold(noPrice) { p =>

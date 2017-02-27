@@ -31,7 +31,7 @@ class UserCommandHandler extends CommandHandler {
     case UpdateEmailCmd(id, email, version) =>
       processAggregateCommand(id, UpdateEmail(email, version))
     case DeleteUserCmd(id, version) =>
-      processAggregateCommand(id, DeleteUser(version))
+      processAggregateCommand(id, DeleteUser(version)
   }
 
   override def aggregateProps(id: String): Props = UserCommand.props(id)

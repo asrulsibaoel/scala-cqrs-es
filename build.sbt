@@ -16,6 +16,7 @@ libraryDependencies ++= {
     "com.typesafe.akka"       %%  "akka-persistence-experimental" % akkaVersion,
     "com.github.ironfish"     %% "akka-persistence-mongo-casbah"  % "0.7.5",
     ws,
-    "com.jason-goodwin"       %% "authentikat-jwt"                % "0.4.1"
+    "com.jason-goodwin"       %% "authentikat-jwt"                % "0.4.1",
+    "com.pauldijou" %% "jwt-play" % "0.11.0"
   )
 }

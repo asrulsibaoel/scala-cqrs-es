@@ -13,20 +13,34 @@ import scala.concurrent.Future
 /**
   * Created by asrulsibaoel on 18/02/17.
   */
-object Categories extends Controller{
+object Categories extends Controller with Secured{
   import CategoryCommandHandler._
 
   implicit val categoryToJson = Json.writes[Category]
 
   val noName = Future.successful(BadRequest(error("please set the 'name' field")))
+  val cantUpdate = Future.successful(BadRequest(error("You have wrong category ID")))
 
-  def create = Action.async (parse.json) { request =>
+  def create = Authenticated.async (parse.json) { request =>
     val name = (request.body \ "name").asOpt[String]
 
     name.fold(noName) { c =>
       sendCmd(AddCategoryCmd(c)) map {
         case cat: Category => Created(Json.toJson(cat))
       }
+    }
+  }
+
+  def update = Authenticated.async (parse.json) { request =>
+    val categoryId = (request.body \ "category_id").asOpt[String]
+    val name = (request.body \ "category_name").toString()
+
+
+    categoryId.fold(cantUpdate) { cat =>
+      sendCmd(UpdateCategoryCmd(cat, name)) map {
+        case cat: Category => Created(Json.toJson(cat))
+      }
+
     }
   }
 
