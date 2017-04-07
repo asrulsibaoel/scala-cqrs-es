@@ -13,6 +13,7 @@ object UserCommandHandler {
   case class GetUserCmd(id: String) extends Command
   case class UpdateEmailCmd(id: String, email: String, version: Long) extends Command
   case class DeleteUserCmd(id: String, version: Long) extends Command
+  case class AuthenticateCmd(email: String, password: String) extends Command
 
   def props: Props = Props(new UserCommandHandler)
 }

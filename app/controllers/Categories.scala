@@ -22,7 +22,7 @@ object Categories extends Controller with Secured{
   val cantUpdate = Future.successful(BadRequest(error("You have wrong category ID")))
 
   def create = Authenticated.async (parse.json) { request =>
-    val name = (request.body \ "name").asOpt[String]
+    val name = (request.body \ "category_name").asOpt[String]
 
     name.fold(noName) { c =>
       sendCmd(AddCategoryCmd(c)) map {

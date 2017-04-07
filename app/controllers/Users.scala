@@ -65,6 +65,14 @@ object Users extends Controller {
     }
   }
 
+  def authenticate() = Action.async(parse.json) { request =>
+    val email = (request.body \ "email").asOpt[String]
+
+    email.fold() {
+
+    }
+  }
+
 
   val userAggregateManager = Global.system.actorOf(UserCommandHandler.props)
 
